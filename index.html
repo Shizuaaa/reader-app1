@@ -611,4 +611,120 @@
             const c = document.getElementById('chapterListContainer');
             if (!chaptersData.length) { c.innerHTML = '<p style="color:#666;text-align:center;padding:20px;">Пока нет глав</p>'; return; }
             c.innerHTML = chaptersData.map((ch, i) => `
-                <div class="chapter-list
+                <div class="chapter-list-item">
+                    <span>${ch.title}</span>
+                    <button class="edit-btn" data-idx="${i}">✏️</button>
+                    <button data-idx="${i}">🗑</button>
+                </div>
+            `).join('');
+            c.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', () => editChapter(parseInt(b.dataset.idx))));
+            c.querySelectorAll('button:not(.edit-btn)').forEach(b => b.addEventListener('click', () => deleteChapter(parseInt(b.dataset.idx))));
+        }
+
+        function editChapter(idx) {
+            document.getElementById('chapterTitleInput').value = chaptersData[idx].title;
+            document.getElementById('chapterTextInput').value = chaptersData[idx].content;
+            document.getElementById('editingChapterIndex').value = idx;
+            document.getElementById('saveChapterBtn').textContent = '💾 Обновить главу';
+            document.getElementById('cancelEditBtn').style.display = 'block';
+            document.getElementById('chapterTitleInput').scrollIntoView({ behavior: 'smooth' });
+        }
+        function cancelEdit() {
+            document.getElementById('chapterTitleInput').value = '';
+            document.getElementById('chapterTextInput').value = '';
+            document.getElementById('editingChapterIndex').value = '-1';
+            document.getElementById('saveChapterBtn').textContent = '💾 Сохранить главу';
+            document.getElementById('cancelEditBtn').style.display = 'none';
+        }
+        async function deleteChapter(idx) {
+            if (!confirm(`Удалить "${chaptersData[idx].title}"?`)) return;
+            chaptersData.splice(idx, 1);
+            const ok = await uploadChapters();
+            document.getElementById('syncStatus').textContent = ok ? '✅ Удалено и сохранено в облаке' : '⚠ Удалено локально, ошибка сервера';
+            document.getElementById('syncStatus').className = 'sync-status ' + (ok ? 'success' : 'error');
+            refreshChapterList();
+            renderAllChapters();
+            buildTOC();
+            if (chaptersData.length) goToChapter(Math.min(currentChapter, chaptersData.length - 1));
+        }
+
+        document.getElementById('saveChapterBtn').addEventListener('click', async () => {
+            const title = document.getElementById('chapterTitleInput').value.trim();
+            const content = document.getElementById('chapterTextInput').value.trim();
+            if (!title) { alert('Введите название'); return; }
+            if (!content) { alert('Введите текст'); return; }
+            const idx = parseInt(document.getElementById('editingChapterIndex').value);
+            if (idx >= 0) chaptersData[idx] = { title, content };
+            else chaptersData.push({ title, content });
+            const ok = await uploadChapters();
+            document.getElementById('syncStatus').textContent = ok ? '✅ Сохранено в облаке!' : '⚠ Сохранено локально, ошибка сервера';
+            document.getElementById('syncStatus').className = 'sync-status ' + (ok ? 'success' : 'error');
+            cancelEdit();
+            refreshChapterList();
+            renderAllChapters();
+            buildTOC();
+            goToChapter(idx >= 0 ? idx : chaptersData.length - 1);
+            document.getElementById('chapterTitleInput').focus();
+        });
+        document.getElementById('cancelEditBtn').addEventListener('click', cancelEdit);
+
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const blob = new Blob([JSON.stringify(chaptersData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'история.json'; a.click();
+            URL.revokeObjectURL(url);
+        });
+        document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFileInput').click());
+        document.getElementById('importFileInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+                try {
+                    const data = JSON.parse(ev.target.result);
+                    if (!Array.isArray(data)) throw new Error('Не массив');
+                    chaptersData = data;
+                    const ok = await uploadChapters();
+                    document.getElementById('syncStatus').textContent = ok ? '✅ Импортировано и сохранено в облаке!' : '⚠ Импортировано локально';
+                    document.getElementById('syncStatus').className = 'sync-status ' + (ok ? 'success' : 'error');
+                    refreshChapterList();
+                    renderAllChapters();
+                    buildTOC();
+                    if (chaptersData.length) goToChapter(0);
+                } catch(err) { alert('Ошибка формата файла'); }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        });
+
+        function changeBg(url) { document.getElementById('bgLayer').style.backgroundImage = `url('${url}')`; closeFab(); }
+        function changeFont(f) { document.querySelectorAll('.content').forEach(c => c.style.fontFamily = f); closeFab(); }
+        let ol = 0;
+        const ops = [0.82, 0.55, 0.95];
+        function toggleOpacity() { ol = (ol + 1) % ops.length; document.getElementById('textWindow').style.background = `rgba(0,0,0,${ops[ol]})`; closeFab(); }
+
+        const fabBtn = document.getElementById('fabBtn');
+        const fabSub = document.getElementById('fabSub');
+        let fabOpen = false;
+        fabBtn.addEventListener('click', e => { e.stopPropagation(); fabOpen = !fabOpen; fabSub.classList.toggle('open', fabOpen); fabBtn.textContent = fabOpen ? '✕' : '⚙️'; });
+        function closeFab() { fabOpen = false; fabSub.classList.remove('open'); fabBtn.textContent = '⚙️'; }
+        document.addEventListener('click', e => { if (!e.target.closest('.fab') && fabOpen) closeFab(); });
+
+        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+        async function init() {
+            const ok = await fetchChapters();
+            document.getElementById('loader').classList.add('hidden');
+            renderAllChapters();
+            buildTOC();
+            if (chaptersData.length) {
+                goToChapter(0);
+                document.getElementById('prevBtn').disabled = true;
+                document.getElementById('nextBtn').disabled = chaptersData.length <= 1;
+            }
+            if (!ok) {
+                document.getElementById('chapterTitleTop').textContent = '⚠ Оффлайн-режим';
+            }
+        }
+        init();
+    </script>
+</body>
+</html>
