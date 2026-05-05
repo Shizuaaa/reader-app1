@@ -25,7 +25,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Задний фон */
         .background-layer {
             position: fixed;
             top: 0;
@@ -40,7 +39,6 @@
             transition: background-image 0.8s ease;
         }
 
-        /* Затемнение для меню */
         .overlay {
             position: fixed;
             top: 0;
@@ -58,7 +56,40 @@
             pointer-events: all;
         }
 
-        /* Оглавление — выезжает слева */
+        /* Загрузка */
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .loader.hidden {
+            display: none;
+        }
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #6c5ce7;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .loader-text {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Оглавление */
         .toc-panel {
             position: fixed;
             top: 0;
@@ -152,7 +183,6 @@
             flex-direction: column;
         }
 
-        /* Основное окно текста */
         .text-window {
             flex: 1;
             background: rgba(0, 0, 0, 0.82);
@@ -164,7 +194,6 @@
             transition: background 0.3s;
         }
 
-        /* Верхняя панель */
         .top-bar {
             display: flex;
             align-items: center;
@@ -173,14 +202,12 @@
             position: sticky;
             top: 0;
             z-index: 5;
-            padding: 8px 0;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
             margin: -30px -22px 20px;
             padding: 15px 22px;
         }
 
-        /* Кнопка меню (бургер) */
         .menu-btn {
             width: 40px;
             height: 40px;
@@ -219,7 +246,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Контент */
         .content {
             font-size: 17px;
             line-height: 1.85;
@@ -232,7 +258,6 @@
             margin-bottom: 16px;
         }
 
-        /* Картинки */
         .float-img-left,
         .float-img-right,
         .float-img-circle {
@@ -262,7 +287,6 @@
             margin-left: 0;
         }
 
-        /* Заголовок главы */
         .chapter-heading {
             font-size: 26px;
             text-align: center;
@@ -273,7 +297,211 @@
             text-shadow: 0 2px 15px rgba(108, 92, 231, 0.4);
         }
 
-        /* Нижняя панель навигации */
+        /* АВТОРСКАЯ ПАНЕЛЬ */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            height: 100dvh;
+            background: rgba(5, 5, 15, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 35;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+        .admin-panel.open {
+            right: 0;
+        }
+
+        .admin-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .admin-header h2 {
+            font-size: 20px;
+            color: #fff;
+        }
+        .admin-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-close:active {
+            background: rgba(255, 60, 60, 0.5);
+        }
+
+        .admin-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .admin-body label {
+            display: block;
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 6px;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .admin-body input,
+        .admin-body textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            font-family: 'Georgia', serif;
+            resize: vertical;
+        }
+        .admin-body textarea {
+            min-height: 120px;
+            line-height: 1.6;
+        }
+        .admin-body input:focus,
+        .admin-body textarea:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            background: rgba(108, 92, 231, 0.08);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 12px;
+            font-family: 'Georgia', serif;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .btn-primary {
+            background: #6c5ce7;
+            color: #fff;
+        }
+        .btn-primary:active {
+            background: #5a4bd1;
+        }
+        .btn-success {
+            background: #00b894;
+            color: #fff;
+        }
+        .btn-success:active {
+            background: #00a381;
+        }
+        .btn-warning {
+            background: #e17055;
+            color: #fff;
+        }
+        .btn-warning:active {
+            background: #d63031;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ddd;
+        }
+        .btn-outline:active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .btn-row {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-row .btn {
+            flex: 1;
+        }
+
+        .chapter-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            gap: 8px;
+        }
+        .chapter-list-item span {
+            flex: 1;
+            font-size: 14px;
+            color: #ddd;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .chapter-list-item button {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            color: #ddd;
+            font-size: 12px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .chapter-list-item button:active {
+            background: rgba(255, 60, 60, 0.4);
+        }
+        .chapter-list-item button.edit-btn:active {
+            background: rgba(108, 92, 231, 0.4);
+        }
+
+        .info-box {
+            background: rgba(108, 92, 231, 0.15);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 10px;
+            padding: 14px;
+            margin: 12px 0;
+            font-size: 13px;
+            color: #bbb;
+            line-height: 1.5;
+        }
+        .info-box strong {
+            color: #fff;
+        }
+        .sync-status {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 6px;
+            color: #888;
+        }
+        .sync-status.success {
+            color: #00b894;
+        }
+        .sync-status.error {
+            color: #e17055;
+        }
+
+        /* Нижняя навигация */
         .nav-footer {
             display: flex;
             align-items: center;
@@ -313,7 +541,7 @@
             font-size: 18px;
         }
 
-        /* Плавающая кнопка настроек */
+        /* FAB */
         .fab {
             position: fixed;
             bottom: 24px;
@@ -323,6 +551,12 @@
             flex-direction: column;
             gap: 8px;
             align-items: flex-end;
+        }
+        .fab-top {
+            bottom: auto;
+            top: 24px;
+            right: 20px;
+            z-index: 11;
         }
         .fab-btn {
             width: 44px;
@@ -378,7 +612,6 @@
             color: #fff;
         }
 
-        /* Глава-контейнеры */
         .chapter-content {
             display: none;
             animation: fadeSlide 0.35s ease;
@@ -398,7 +631,26 @@
             }
         }
 
-        /* Адаптивность для узких экранов */
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+        }
+        .empty-state .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .empty-state h3 {
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+        .empty-state p {
+            color: #888;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
         @media (max-width: 480px) {
             .text-window {
                 padding: 20px 14px 30px;
@@ -443,23 +695,8 @@
                 left: -90%;
                 width: 90%;
             }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            .text-window {
-                padding: 25px 18px 35px;
-            }
-            .top-bar {
-                margin: -25px -18px 20px;
-                padding: 14px 18px;
-            }
-            .float-img-left,
-            .float-img-right {
-                max-width: 40%;
-            }
-            .float-img-circle {
-                width: 120px;
-                height: 120px;
+            .admin-panel {
+                max-width: 100%;
             }
         }
     </style>
@@ -468,296 +705,194 @@
     <!-- Задний фон -->
     <div class="background-layer" id="bgLayer"></div>
 
+    <!-- Загрузчик -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text">Загрузка истории...</div>
+    </div>
+
     <!-- Затемнение -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Оглавление (выезжает слева) -->
+    <!-- Оглавление -->
     <div class="toc-panel" id="tocPanel">
-        <div class="toc-header">
-            <h2>📖 Оглавление</h2>
+        <div class="toc-header"><h2>📖 Оглавление</h2></div>
+        <div class="toc-list" id="tocList"></div>
+    </div>
+
+    <!-- Затемнение админки -->
+    <div class="overlay" id="adminOverlay" style="z-index:33;"></div>
+
+    <!-- АВТОРСКАЯ ПАНЕЛЬ -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2>✍️ Панель автора</h2>
+            <button class="admin-close" id="adminClose">✕</button>
         </div>
-        <div class="toc-list" id="tocList">
-            <!-- Заполняется скриптом -->
+        <div class="admin-body" id="adminBody">
+            <div class="info-box">
+                <strong>☁️ Облачная синхронизация</strong><br>
+                Главы сохраняются на сервер. Все читатели видят изменения мгновенно.
+            </div>
+
+            <label>Название главы</label>
+            <input type="text" id="chapterTitleInput" placeholder="Например: Глава 1: Начало пути">
+
+            <label>Текст главы (можно HTML)</label>
+            <textarea id="chapterTextInput" placeholder="Вставьте текст главы...&#10;&#10;Картинки с обтеканием:&#10;&lt;img src=&quot;ССЫЛКА&quot; class=&quot;float-img-left&quot;&gt;&#10;&lt;img src=&quot;ССЫЛКА&quot; class=&quot;float-img-right&quot;&gt;&#10;&lt;img src=&quot;ССЫЛКА&quot; class=&quot;float-img-circle&quot;&gt;"></textarea>
+
+            <input type="hidden" id="editingChapterIndex" value="-1">
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="saveChapterBtn">💾 Сохранить главу</button>
+                <button class="btn btn-outline" id="cancelEditBtn" style="display:none;">Отмена</button>
+            </div>
+
+            <label style="margin-top:24px;">📋 Все главы</label>
+            <div id="chapterListContainer">
+                <p style="color:#666;font-size:13px;text-align:center;padding:20px;">Загрузка...</p>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-success" id="exportBtn">📤 Скачать JSON</button>
+                <button class="btn btn-outline" id="importBtn">📥 Загрузить JSON</button>
+            </div>
+            <input type="file" id="importFileInput" accept=".json" style="display:none;">
+
+            <p class="sync-status" id="syncStatus"></p>
         </div>
+    </div>
+
+    <!-- Кнопка админа -->
+    <div class="fab fab-top">
+        <button class="fab-btn" id="secretAdminBtn" title="Панель автора" style="font-size:14px;opacity:0.5;">🔑</button>
     </div>
 
     <!-- Читалка -->
     <div class="reader-container">
         <div class="text-window" id="textWindow">
-            <!-- Верхняя панель -->
             <div class="top-bar">
                 <div class="menu-btn" id="menuBtn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </div>
-                <div class="chapter-title-top" id="chapterTitleTop">Глава 1</div>
+                <div class="chapter-title-top" id="chapterTitleTop">Загрузка...</div>
             </div>
 
-            <!-- Содержимое глав -->
-            <div id="chaptersContainer">
-                <!-- Глава 1 -->
-                <div class="chapter-content active" data-chapter="1">
-                    <h1 class="chapter-heading">Глава 1: Начало пути</h1>
-                    <div class="content">
-                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400" alt="Маяк" class="float-img-circle" loading="lazy">
+            <div id="chaptersContainer"></div>
 
-                        <p>В далёком королевстве, где горы касались облаков, а реки пели древние песни, жил молодой летописец по имени Элиан. Его глаза видели то, что скрыто от простых смертных — нити судьбы, сплетающиеся в полотне времени.</p>
-
-                        <p>Каждое утро он поднимался на смотровую башню и записывал в свою книгу события, которые ещё не произошли. Люди считали его безумцем, но король знал истинную цену его дара. Впрочем, даже король не догадывался, насколько глубоко простирается эта сила.</p>
-
-                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500" alt="Лес" class="float-img-right" loading="lazy">
-
-                        <p>Однажды, когда солнце окрасило небо в багровые тона, Элиан увидел в своих видениях нечто ужасное — тьму, что поднимается из-за Восточных гор. Тьму, что поглощает всё живое на своём пути.</p>
-
-                        <p>Он поспешил к королю, но стража не пустила его в тронный зал — придворный маг объявил Элиана лжепророком. «Твои слова — яд для королевства», — прошипел маг, и двери захлопнулись перед носом летописца.</p>
-
-                        <p>Тогда Элиан решил действовать самостоятельно.</p>
-                    </div>
-                </div>
-
-                <!-- Глава 2 -->
-                <div class="chapter-content" data-chapter="2">
-                    <h1 class="chapter-heading">Глава 2: Встреча в ночи</h1>
-                    <div class="content">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500" alt="Горы" class="float-img-left" loading="lazy">
-
-                        <p>Собрав немного припасов и взяв с собой лишь книгу предсказаний да старый отцовский меч, Элиан отправился в путь на восток. Дорога была трудна — колючие кустарники рвали одежду, а холодный ветер пробирал до костей.</p>
-
-                        <p>На третий день пути, когда луна взошла высоко над верхушками сосен, он заметил огонёк вдалеке. Подойдя ближе, Элиан увидел костёр и фигуру, сидящую у огня.</p>
-
-                        <img src="https://images.unsplash.com/photo-1532767153582-b1a0e5145009?w=400" alt="Костёр" class="float-img-circle" loading="lazy">
-
-                        <p>Это была странница с волосами цвета лунного серебра. Она сидела, скрестив ноги, и напевала мелодию, от которой звёзды на небе начинали танцевать. «Ты тоже это видишь?» — спросила она, даже не оборачиваясь. И Элиан понял — он не один такой.</p>
-
-                        <p>«Меня зовут Лиара», — сказала она, протягивая ему тёплый хлеб. — «И я знаю, зачем ты идёшь на восток. Тьма уже близко. Но вдвоём у нас есть шанс».</p>
-                    </div>
-                </div>
-
-                <!-- Глава 3 -->
-                <div class="chapter-content" data-chapter="3">
-                    <h1 class="chapter-heading">Глава 3: Тени прошлого</h1>
-                    <div class="content">
-                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=500" alt="Тени" class="float-img-right" loading="lazy">
-
-                        <p>Вместе они продолжили путь к Восточным горам. С каждым шагом тьма становилась всё ближе, но и надежда в их сердцах разгоралась всё ярче. Лиара рассказала, что она родом из древнего ордена Хранителей — тех, кто испокон веков оберегал мир от подобных угроз.</p>
-
-                        <p>«Мой наставник говорил, что Тьма — это не просто зло, — объясняла Лиара, пока они шли через туманное ущелье. — Это отражение страхов всего живого. И победить её можно, только поняв природу собственного страха».</p>
-
-                        <p>Элиан задумался. Его самый большой страх — быть непризнанным, остаться голосом, который никто не слышит. Может быть, именно поэтому маг так легко отмахнулся от его предупреждения?</p>
-
-                        <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=500" alt="Океан" class="float-img-left" loading="lazy">
-
-                        <p>А в королевском дворце тем временем придворный маг листал запретные фолианты и улыбался. Он знал то, чего не знали остальные. И его план — страшный, но гениальный — уже начал осуществляться. Тьма была не врагом ему. Тьма была его союзником...</p>
-
-                        <p>Когда луна скрылась за тучами, Элиан и Лиара достигли подножия Восточных гор. Где-то там, в глубине, пульсировало тёмное сердце — источник надвигающейся угрозы. И оно чувствовало их приближение.</p>
-                    </div>
-                </div>
-
-                <!-- Глава 4 -->
-                <div class="chapter-content" data-chapter="4">
-                    <h1 class="chapter-heading">Глава 4: Сердце горы</h1>
-                    <div class="content">
-                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500" alt="Свет" class="float-img-circle" loading="lazy">
-
-                        <p>Вход в пещеру был скрыт за водопадом — точно как описывала древняя книга Лиары. Холодные капли оседали на лицах, пока они пробирались внутрь. Воздух стал тяжёлым, пропитанным запахом сырой земли и чем-то ещё — древним, нездешним.</p>
-
-                        <p>В глубине пещеры они нашли то, что искали. Кристалл — огромный, пульсирующий фиолетовым светом. От него исходили волны энергии, искажающие пространство вокруг. Это и было сердце Тьмы — и одновременно ключ к её уничтожению.</p>
-
-                        <p>«Нужно прикоснуться к нему одновременно, — прошептала Лиара. — Твоя сила видения и моя сила Хранителя. Только вместе».</p>
-
-                        <p>Элиан кивнул. Они протянули руки, и в тот же миг пещеру озарила ослепительная вспышка...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Нижняя навигация -->
             <div class="nav-footer">
-                <button class="nav-btn" id="prevBtn" disabled>
-                    <span class="arrow">◀</span> Назад
-                </button>
-                <button class="nav-btn" id="nextBtn">
-                    Далее <span class="arrow">▶</span>
-                </button>
+                <button class="nav-btn" id="prevBtn" disabled><span class="arrow">◀</span> Назад</button>
+                <button class="nav-btn" id="nextBtn" disabled>Далее <span class="arrow">▶</span></button>
             </div>
         </div>
     </div>
 
-    <!-- FAB-меню -->
-    <div class="fab" id="fab">
+    <!-- FAB настроек -->
+    <div class="fab">
         <div class="fab-sub" id="fabSub">
-            <button class="fab-sub-btn" onclick="changeBackground('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920')">🌄 Горный фон</button>
+            <button class="fab-sub-btn" onclick="changeBackground('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920')">🌄 Горы</button>
             <button class="fab-sub-btn" onclick="changeBackground('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920')">🌊 Океан</button>
             <button class="fab-sub-btn" onclick="changeBackground('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920')">🌿 Лес</button>
             <button class="fab-sub-btn" onclick="changeFont('Georgia')">🔤 Georgia</button>
             <button class="fab-sub-btn" onclick="changeFont('Arial')">🔤 Arial</button>
-            <button class="fab-sub-btn" onclick="changeFont('Courier New')">🔤 Mono</button>
-            <button class="fab-sub-btn" onclick="toggleBgOpacity()">🌗 Темнее/светлее</button>
+            <button class="fab-sub-btn" onclick="toggleBgOpacity()">🌗 Темнее</button>
         </div>
         <button class="fab-btn" id="fabBtn">⚙️</button>
     </div>
 
     <script>
-        // ======== ОГЛАВЛЕНИЕ И НАВИГАЦИЯ ========
+        // ==================== КОНФИГУРАЦИЯ ====================
+        // ЗАМЕНИТЕ НА СВОИ ДАННЫЕ:
+        const JSONBIN_API_KEY = '$2a$10$lUsFR/tlJG9up4GH19dk8ODP.6uXsPC0sA/smcd/5G7T2wkRGsxPS'; // Ключ из шага 1
+        const JSONBIN_BIN_ID = 'https://api.jsonbin.io/v3/b/69fa2f56856a682189ad44b0'; // ID корзины из шага 2
+        const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
-        const chapters = document.querySelectorAll('.chapter-content');
-        const tocList = document.getElementById('tocList');
-        const tocPanel = document.getElementById('tocPanel');
-        const overlay = document.getElementById('overlay');
-        const menuBtn = document.getElementById('menuBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const chapterTitleTop = document.getElementById('chapterTitleTop');
-        let currentChapter = 1;
-        const totalChapters = chapters.length;
+        // ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+        let chaptersData = [];
+        let currentChapter = 0;
+        let isAdmin = false; // Админ-режим активируется только после открытия панели + пароля
 
-        // Построить оглавление
-        function buildTOC() {
-            tocList.innerHTML = '';
-            chapters.forEach(ch => {
-                const num = ch.dataset.chapter;
-                const heading = ch.querySelector('.chapter-heading').textContent;
-                const btn = document.createElement('button');
-                btn.className = 'toc-item';
-                btn.innerHTML = `<span class="chapter-num">Глава ${num}</span>${heading.replace(/^Глава \d+: /, '')}`;
-                btn.addEventListener('click', () => goToChapter(parseInt(num)));
-                if (parseInt(num) === currentChapter) btn.classList.add('active');
-                tocList.appendChild(btn);
-            });
-        }
-
-        // Перейти к главе
-        function goToChapter(num) {
-            if (num < 1 || num > totalChapters) return;
-            currentChapter = num;
-
-            // Скрыть все, показать нужную
-            chapters.forEach(ch => ch.classList.remove('active'));
-            document.querySelector(`[data-chapter="${num}"]`).classList.add('active');
-
-            // Обновить заголовок в топ-баре
-            const heading = document.querySelector(`[data-chapter="${num}"] .chapter-heading`).textContent;
-            chapterTitleTop.textContent = heading;
-
-            // Обновить кнопки
-            prevBtn.disabled = (num === 1);
-            nextBtn.disabled = (num === totalChapters);
-
-            // Обновить оглавление
-            document.querySelectorAll('.toc-item').forEach((item, i) => {
-                item.classList.toggle('active', i + 1 === num);
-            });
-
-            // Закрыть меню
-            closeTOC();
-
-            // Прокрутка наверх
-            document.querySelector('.text-window').scrollIntoView({ behavior: 'smooth' });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Открыть/закрыть оглавление
-        function openTOC() {
-            tocPanel.classList.add('open');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeTOC() {
-            tocPanel.classList.remove('open');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        menuBtn.addEventListener('click', openTOC);
-        overlay.addEventListener('click', closeTOC);
-
-        // Свайп для закрытия (только на мобильных)
-        let touchStartX = 0;
-        tocPanel.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        });
-        tocPanel.addEventListener('touchmove', (e) => {
-            const diff = e.touches[0].clientX - touchStartX;
-            if (diff < -40) closeTOC();
-        });
-
-        // Кнопки навигации
-        prevBtn.addEventListener('click', () => goToChapter(currentChapter - 1));
-        nextBtn.addEventListener('click', () => goToChapter(currentChapter + 1));
-
-        // Свайпы для перелистывания глав
-        let swipeStartX = 0;
-        let swipeStartY = 0;
-        document.addEventListener('touchstart', (e) => {
-            // Игнорируем, если свайп начался в меню
-            if (e.target.closest('.toc-panel') || e.target.closest('.fab')) return;
-            swipeStartX = e.touches[0].clientX;
-            swipeStartY = e.touches[0].clientY;
-        });
-        document.addEventListener('touchend', (e) => {
-            if (e.target.closest('.toc-panel') || e.target.closest('.fab')) return;
-            const diffX = e.changedTouches[0].clientX - swipeStartX;
-            const diffY = e.changedTouches[0].clientY - swipeStartY;
-            // Только горизонтальный свайп
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                if (diffX < 0 && currentChapter < totalChapters) {
-                    goToChapter(currentChapter + 1);
-                } else if (diffX > 0 && currentChapter > 1) {
-                    goToChapter(currentChapter - 1);
+        // ==================== API: ЗАГРУЗКА С СЕРВЕРА ====================
+        async function fetchChapters() {
+            try {
+                const resp = await fetch(JSONBIN_URL, {
+                    headers: {
+                        'X-Access-Key': JSONBIN_API_KEY
+                    }
+                });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const json = await resp.json();
+                chaptersData = json.record;
+                if (!Array.isArray(chaptersData)) chaptersData = [];
+                return true;
+            } catch (err) {
+                console.error('Ошибка загрузки с сервера:', err);
+                // Пробуем загрузить из localStorage как резерв
+                const local = localStorage.getItem('reader_chapters_backup');
+                if (local) {
+                    try {
+                        chaptersData = JSON.parse(local);
+                    } catch (e) {
+                        chaptersData = [];
+                    }
                 }
+                return false;
             }
-        });
-
-        // ======== НАСТРОЙКИ ========
-
-        // Смена фона
-        function changeBackground(url) {
-            document.getElementById('bgLayer').style.backgroundImage = `url('${url}')`;
-            closeFab();
         }
 
-        // Смена шрифта
-        function changeFont(font) {
-            document.querySelectorAll('.content').forEach(c => c.style.fontFamily = font);
-            closeFab();
+        // ==================== API: СОХРАНЕНИЕ НА СЕРВЕР ====================
+        async function uploadChapters() {
+            try {
+                const resp = await fetch(JSONBIN_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'X-Access-Key': JSONBIN_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(chaptersData)
+                });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                // Сохраняем локальную копию
+                localStorage.setItem('reader_chapters_backup', JSON.stringify(chaptersData));
+                return true;
+            } catch (err) {
+                console.error('Ошибка сохранения на сервер:', err);
+                // Сохраняем локально в любом случае
+                localStorage.setItem('reader_chapters_backup', JSON.stringify(chaptersData));
+                return false;
+            }
         }
 
-        // Переключение прозрачности окна
-        let opacityLevel = 0;
-        const opacities = [0.82, 0.55, 0.95];
-        function toggleBgOpacity() {
-            opacityLevel = (opacityLevel + 1) % opacities.length;
-            document.getElementById('textWindow').style.background =
-                `rgba(0, 0, 0, ${opacities[opacityLevel]})`;
-            closeFab();
+        // ==================== ОТОБРАЖЕНИЕ ГЛАВ ====================
+        function renderAllChapters() {
+            const container = document.getElementById('chaptersContainer');
+            if (!chaptersData.length) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📚</div>
+                        <h3>Здесь пока пусто</h3>
+                        <p>Автор ещё не добавил ни одной главы.</p>
+                    </div>`;
+                document.getElementById('chapterTitleTop').textContent = 'Читалка';
+                document.getElementById('prevBtn').disabled = true;
+                document.getElementById('nextBtn').disabled = true;
+                return;
+            }
+
+            container.innerHTML = chaptersData.map((ch, i) => `
+                <div class="chapter-content${i === 0 ? ' active' : ''}" data-chapter="${i + 1}">
+                    <h1 class="chapter-heading">${escapeHTML(ch.title)}</h1>
+                    <div class="content">${ch.content}</div>
+                </div>
+            `).join('');
         }
 
-        // FAB меню
-        const fabBtn = document.getElementById('fabBtn');
-        const fabSub = document.getElementById('fabSub');
-        let fabOpen = false;
-
-        fabBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            fabOpen = !fabOpen;
-            fabSub.classList.toggle('open', fabOpen);
-            fabBtn.textContent = fabOpen ? '✕' : '⚙️';
-        });
-
-        function closeFab() {
-            fabOpen = false;
-            fabSub.classList.remove('open');
-            fabBtn.textContent = '⚙️';
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
         }
 
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.fab') && fabOpen) closeFab();
-        });
-
-        // ======== ИНИЦИАЛИЗАЦИЯ ========
-        buildTOC();
-        goToChapter(1);
-        closeTOC();
-    </script>
-</body>
-</html>
+        // ==================== ОГЛАВЛЕНИЕ ====================
+        function buildTOC() {
+            const
