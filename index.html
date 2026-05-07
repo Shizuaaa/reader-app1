@@ -557,14 +557,24 @@
         function closeTOC() { document.getElementById('tocPanel').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.style.overflow = ''; }
 
         document.getElementById('menuBtn').addEventListener('click', openTOC);
+        document.getElementById('menuBtn').addEventListener('touchstart', function(e) { e.preventDefault(); openTOC(); });
         document.getElementById('overlay').addEventListener('click', closeTOC);
 
         let tsx = 0;
         document.getElementById('tocPanel').addEventListener('touchstart', e => { tsx = e.touches[0].clientX; });
         document.getElementById('tocPanel').addEventListener('touchmove', e => { if (e.touches[0].clientX - tsx < -40) closeTOC(); });
 
-        document.getElementById('prevBtn').addEventListener('click', () => goToChapter(currentChapter - 1));
-        document.getElementById('nextBtn').addEventListener('click', () => goToChapter(currentChapter + 1));
+        let navLocked = false;
+        function safeGoTo(idx) {
+            if (navLocked) return;
+            navLocked = true;
+            goToChapter(idx);
+            setTimeout(() => { navLocked = false; }, 400);
+        }
+        document.getElementById('prevBtn').addEventListener('click', () => safeGoTo(currentChapter - 1));
+        document.getElementById('nextBtn').addEventListener('click', () => safeGoTo(currentChapter + 1));
+        document.getElementById('prevBtn').addEventListener('touchstart', function(e) { e.preventDefault(); safeGoTo(currentChapter - 1); });
+        document.getElementById('nextBtn').addEventListener('touchstart', function(e) { e.preventDefault(); safeGoTo(currentChapter + 1); });
 
         let sx = 0, sy = 0;
         document.addEventListener('touchstart', e => {
@@ -604,6 +614,7 @@
         }
 
         document.getElementById('secretAdminBtn').addEventListener('click', openAdmin);
+        document.getElementById('secretAdminBtn').addEventListener('touchstart', function(e) { e.preventDefault(); openAdmin(); });
         document.getElementById('adminClose').addEventListener('click', closeAdmin);
         adminOverlay.addEventListener('click', closeAdmin);
 
@@ -705,7 +716,14 @@
         const fabBtn = document.getElementById('fabBtn');
         const fabSub = document.getElementById('fabSub');
         let fabOpen = false;
-        fabBtn.addEventListener('click', e => { e.stopPropagation(); fabOpen = !fabOpen; fabSub.classList.toggle('open', fabOpen); fabBtn.textContent = fabOpen ? '✕' : '⚙️'; });
+        fabBtn.addEventListener('click', toggleFab);
+        fabBtn.addEventListener('touchstart', function(e) { e.preventDefault(); toggleFab(); });
+        function toggleFab(e) {
+            if (e) e.stopPropagation();
+            fabOpen = !fabOpen;
+            fabSub.classList.toggle('open', fabOpen);
+            fabBtn.textContent = fabOpen ? '✕' : '⚙️';
+        }
         function closeFab() { fabOpen = false; fabSub.classList.remove('open'); fabBtn.textContent = '⚙️'; }
         document.addEventListener('click', e => { if (!e.target.closest('.fab') && fabOpen) closeFab(); });
 
