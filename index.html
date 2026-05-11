@@ -19,394 +19,185 @@
             -webkit-font-smoothing: antialiased;
         }
         .background-layer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920');
-            background-size: cover;
-            background-position: center;
+            background-size: cover; background-position: center;
             filter: blur(4px) brightness(0.25);
-            z-index: 0;
-            transition: background-image 0.8s ease;
+            z-index: 0; transition: background-image 0.8s ease;
         }
         .overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 20;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 20;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .overlay.active { opacity: 1; pointer-events: all; }
         .loader {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%,-50%);
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 15px;
         }
         .loader.hidden { display: none; }
         .spinner {
             width: 44px; height: 44px;
-            border: 3px solid rgba(255,255,255,0.2);
-            border-top-color: #6c5ce7;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            border: 3px solid rgba(255,255,255,0.2); border-top-color: #6c5ce7;
+            border-radius: 50%; animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loader-text { color: #aaa; font-size: 14px; }
         .toc-panel {
-            position: fixed;
-            top: 0; left: -85%;
-            width: 85%; max-width: 340px;
+            position: fixed; top: 0; left: -85%; width: 85%; max-width: 340px;
             height: 100%; height: 100dvh;
-            background: rgba(10,10,20,0.97);
-            backdrop-filter: blur(20px);
-            z-index: 30;
-            display: flex;
-            flex-direction: column;
+            background: rgba(10,10,20,0.97); backdrop-filter: blur(20px);
+            z-index: 30; display: flex; flex-direction: column;
             transition: left 0.35s cubic-bezier(0.22,0.61,0.36,1);
-            border-right: 1px solid rgba(255,255,255,0.08);
-            overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,0.08); overflow: hidden;
         }
         .toc-panel.open { left: 0; }
-        .toc-header {
-            padding: 20px 20px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            flex-shrink: 0;
-        }
+        .toc-header { padding: 20px 20px 15px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
         .toc-header h2 { font-size: 20px; color: #fff; font-weight: normal; letter-spacing: 0.5px; }
         .toc-list { flex: 1; overflow-y: auto; padding: 10px 0; -webkit-overflow-scrolling: touch; }
-        .toc-list::-webkit-scrollbar { width: 2px; }
-        .toc-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         .toc-item {
-            display: block;
-            width: 100%;
-            padding: 16px 20px;
-            text-align: left;
-            background: none;
-            border: none;
-            color: #bbb;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border-left: 3px solid transparent;
-            font-family: 'Georgia', serif;
-            line-height: 1.4;
+            display: block; width: 100%; padding: 16px 20px; text-align: left;
+            background: none; border: none; color: #bbb; font-size: 16px;
+            cursor: pointer; transition: all 0.2s; border-left: 3px solid transparent;
+            font-family: 'Georgia', serif; line-height: 1.4;
         }
         .toc-item:active { background: rgba(255,255,255,0.05); }
-        .toc-item.active {
-            color: #fff;
-            border-left-color: #6c5ce7;
-            background: rgba(108,92,231,0.12);
-        }
+        .toc-item.active { color: #fff; border-left-color: #6c5ce7; background: rgba(108,92,231,0.12); }
         .reader-container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 750px;
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
+            position: relative; z-index: 1; width: 100%; max-width: 750px;
+            min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
             pointer-events: none;
         }
-        }
         .text-window {
-            flex: 1;
-            background: rgba(0,0,0,0.82);
-            backdrop-filter: blur(10px);
-            padding: 30px 22px 40px;
-            min-height: 100vh;
-            min-height: 100dvh;
-            transition: background 0.3s;
-            pointer-events: auto;
+            flex: 1; background: rgba(0,0,0,0.82); backdrop-filter: blur(10px);
+            padding: 30px 22px 100px; min-height: 100vh; min-height: 100dvh;
+            transition: background 0.3s; pointer-events: auto;
         }
         .top-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0; z-index: 5;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
-            margin: -30px -22px 20px;
-            padding: 15px 22px;
-            pointer-events: auto;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 15;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+            margin: -30px -22px 20px; padding: 15px 22px; pointer-events: auto;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
+        .top-bar-left { display: flex; align-items: center; gap: 12px; }
         .menu-btn {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-            flex-shrink: 0;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 4px; cursor: pointer; flex-shrink: 0;
         }
         .menu-btn:active { background: rgba(255,255,255,0.18); }
-        .menu-btn span {
-            display: block;
-            width: 18px; height: 2px;
-            background: #ddd;
-            border-radius: 2px;
+        .menu-btn span { display: block; width: 18px; height: 2px; background: #ddd; border-radius: 2px; }
+        .settings-btn {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            color: #ddd; font-size: 18px; cursor: pointer; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
         }
+        .settings-btn:active { background: rgba(108,92,231,0.5); }
         .chapter-title-top {
-            font-size: 16px; color: #aaa;
-            text-align: right;
-            flex: 1;
-            margin-left: 15px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 16px; color: #aaa; text-align: right; flex: 1;
+            margin-left: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .content { font-size: 17px; line-height: 1.85; text-align: justify; word-break: break-word; hyphens: auto; -webkit-hyphens: auto; }
         .content p { margin-bottom: 16px; }
         .float-img-left, .float-img-right, .float-img-circle {
-            max-width: 45%;
-            margin: 8px 14px 10px;
-            border-radius: 10px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.15);
+            max-width: 45%; margin: 8px 14px 10px; border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15);
         }
         .float-img-left { float: left; margin-left: 0; shape-outside: margin-box; }
         .float-img-right { float: right; margin-right: 0; shape-outside: margin-box; }
-        .float-img-circle {
-            float: left;
-            border-radius: 50%;
-            shape-outside: circle(50%);
-            width: 140px; height: 140px;
-            object-fit: cover;
-            margin-left: 0;
+        .float-img-circle { float: left; border-radius: 50%; shape-outside: circle(50%); width: 140px; height: 140px; object-fit: cover; margin-left: 0; }
+        .chapter-heading { font-size: 26px; text-align: center; color: #fff; margin: 10px 0 25px; font-weight: normal; letter-spacing: 0.5px; text-shadow: 0 2px 15px rgba(108,92,231,0.4); }
+
+        /* Панель настроек (модальная) */
+        .settings-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 40; display: flex; align-items: flex-end; justify-content: center;
+            pointer-events: none; opacity: 0; transition: opacity 0.3s;
         }
-        .chapter-heading {
-            font-size: 26px;
-            text-align: center;
-            color: #fff;
-            margin: 10px 0 25px;
-            font-weight: normal;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 15px rgba(108,92,231,0.4);
+        .settings-modal.open { opacity: 1; pointer-events: all; }
+        .settings-sheet {
+            width: 100%; max-width: 500px; max-height: 70vh;
+            background: rgba(15,15,30,0.98); backdrop-filter: blur(20px);
+            border-radius: 20px 20px 0 0; padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.22,0.61,0.36,1);
+            overflow-y: auto;
         }
+        .settings-modal.open .settings-sheet { transform: translateY(0); }
+        .settings-handle { width: 40px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; margin: 0 auto 16px; }
+        .settings-title { font-size: 18px; color: #fff; text-align: center; margin-bottom: 16px; }
+        .settings-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .settings-btn-item {
+            padding: 12px 8px; border-radius: 12px; background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15); color: #ddd;
+            font-size: 13px; cursor: pointer; text-align: center;
+            font-family: 'Georgia', serif; transition: all 0.2s;
+        }
+        .settings-btn-item:active { background: #6c5ce7; color: #fff; transform: scale(0.95); }
+
+        /* Админ-панель */
         .admin-panel {
-            position: fixed;
-            top: 0; right: -100%;
-            width: 100%; max-width: 500px;
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 500px;
             height: 100%; height: 100dvh;
-            background: rgba(5,5,15,0.98);
-            backdrop-filter: blur(20px);
-            z-index: 35;
-            display: flex;
-            flex-direction: column;
+            background: rgba(5,5,15,0.98); backdrop-filter: blur(20px);
+            z-index: 35; display: flex; flex-direction: column;
             transition: right 0.35s cubic-bezier(0.22,0.61,0.36,1);
-            border-left: 1px solid rgba(255,255,255,0.08);
-            overflow: hidden;
+            border-left: 1px solid rgba(255,255,255,0.08); overflow: hidden;
         }
         .admin-panel.open { right: 0; }
-        .admin-header {
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
+        .admin-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         .admin-header h2 { font-size: 20px; color: #fff; }
-        .admin-close {
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: #fff;
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .admin-close:active { background: rgba(255,60,60,0.5); }
+        .admin-close { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .admin-body { flex: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch; }
         .admin-body label { display: block; color: #aaa; font-size: 13px; margin-bottom: 6px; margin-top: 16px; text-transform: uppercase; letter-spacing: 1px; }
-        .admin-body input, .admin-body textarea {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 15px;
-            font-family: 'Georgia', serif;
-            resize: vertical;
-        }
+        .admin-body input, .admin-body textarea { width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: #fff; font-size: 15px; font-family: 'Georgia', serif; resize: vertical; }
         .admin-body textarea { min-height: 120px; line-height: 1.6; }
-        .admin-body input:focus, .admin-body textarea:focus { outline: none; border-color: #6c5ce7; background: rgba(108,92,231,0.08); }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 12px;
-            font-family: 'Georgia', serif;
-            transition: all 0.2s;
-            text-align: center;
-        }
+        .btn { display: block; width: 100%; padding: 14px; border-radius: 12px; border: none; font-size: 15px; cursor: pointer; margin-top: 8px; font-family: 'Georgia', serif; transition: all 0.2s; text-align: center; }
         .btn:active { transform: scale(0.97); }
         .btn-primary { background: #6c5ce7; color: #fff; }
-        .btn-primary:active { background: #5a4bd1; }
         .btn-success { background: #00b894; color: #fff; }
         .btn-warning { background: #e17055; color: #fff; }
         .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #ddd; }
-        .btn-outline:active { background: rgba(255,255,255,0.1); }
         .btn-row { display: flex; gap: 8px; }
         .btn-row .btn { flex: 1; }
-        .chapter-list-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: rgba(255,255,255,0.04);
-            border-radius: 10px;
-            margin-bottom: 8px;
-            gap: 8px;
-        }
-        .chapter-list-item span { flex: 1; font-size: 14px; color: #ddd; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .chapter-list-item button {
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.06);
-            color: #ddd;
-            font-size: 12px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        .chapter-list-item button:active { background: rgba(255,60,60,0.4); }
-        .chapter-list-item button.edit-btn:active { background: rgba(108,92,231,0.4); }
-        .info-box {
-            background: rgba(108,92,231,0.15);
-            border: 1px solid rgba(108,92,231,0.3);
-            border-radius: 10px;
-            padding: 14px;
-            margin: 12px 0;
-            font-size: 13px;
-            color: #bbb;
-            line-height: 1.5;
-        }
-        .info-box strong { color: #fff; }
-        .sync-status { font-size: 12px; text-align: center; margin-top: 6px; color: #888; }
-        .sync-status.success { color: #00b894; }
-        .sync-status.error { color: #e17055; }
-        .nav-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 20px;
+        .chapter-list-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; margin-bottom: 8px; gap: 8px; }
+        .chapter-list-item span { flex: 1; font-size: 14px; color: #ddd; }
+        .chapter-list-item button { padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: #ddd; font-size: 12px; cursor: pointer; flex-shrink: 0; }
+
+        /* Нав-бар внизу */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 15;
+            display: flex; gap: 12px; padding: 12px 20px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
             border-top: 1px solid rgba(255,255,255,0.08);
-            gap: 10px;
-            pointer-events: auto;
+            pointer-events: auto; justify-content: center;
         }
         .nav-btn {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #ddd;
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-            white-space: nowrap;
-            flex: 1;
-            text-align: center;
-            font-family: 'Georgia', serif;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            flex: 1; max-width: 200px; padding: 14px 16px; border-radius: 14px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2);
+            color: #ddd; font-size: 15px; cursor: pointer; text-align: center;
+            font-family: 'Georgia', serif; min-height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
         }
-        .nav-btn:active { background: rgba(108,92,231,0.3); border-color: #6c5ce7; }
+        .nav-btn:active { background: rgba(108,92,231,0.4); border-color: #6c5ce7; transform: scale(0.96); }
         .nav-btn:disabled { opacity: 0.3; pointer-events: none; }
-        .fab {
-            position: fixed;
-            bottom: 24px;
-            right: 20px;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: flex-end;
-            pointer-events: auto;
-        }
-        .fab-top { bottom: auto; top: 24px; right: 20px; z-index: 11; }
-        .fab-btn {
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            background: rgba(20,20,30,0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-        .fab-btn:active { background: #6c5ce7; transform: scale(0.92); }
-        .fab-sub {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-bottom: 6px;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(10px);
-            transition: all 0.25s ease;
-        }
-        .fab-sub.open { opacity: 1; pointer-events: all; transform: translateY(0); }
-        .fab-sub-btn {
-            padding: 10px 16px;
-            border-radius: 20px;
-            background: rgba(20,20,30,0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #ddd;
-            font-size: 13px;
-            cursor: pointer;
-            white-space: nowrap;
-            text-align: center;
-            transition: all 0.2s;
-            font-family: 'Georgia', serif;
-        }
-        .fab-sub-btn:active { background: #6c5ce7; color: #fff; }
+
         .chapter-content { display: none; animation: fadeSlide 0.35s ease; }
         .chapter-content.active { display: block; }
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-        .empty-state { text-align: center; padding: 60px 30px; }
-        .empty-state .icon { font-size: 60px; margin-bottom: 20px; }
-        .empty-state h3 { color: #fff; font-size: 20px; margin-bottom: 10px; font-weight: normal; }
-        .empty-state p { color: #888; font-size: 14px; line-height: 1.6; }
+
         @media (max-width: 480px) {
-            .text-window { padding: 20px 14px 30px; }
+            .text-window { padding: 20px 14px 110px; }
             .top-bar { margin: -20px -14px 18px; padding: 12px 14px; }
             .content { font-size: 16px; line-height: 1.75; }
-            .float-img-left, .float-img-right, .float-img-circle { float: none; display: block; max-width: 100%; width: 100%; margin: 12px 0; height: auto; border-radius: 10px; }
-            .float-img-circle { height: 220px; object-fit: cover; }
-            .chapter-heading { font-size: 22px; margin: 5px 0 18px; }
-            .nav-btn { padding: 10px 8px; font-size: 13px; min-height: 44px; }
-            .fab { bottom: 16px; right: 12px; }
+            .float-img-left, .float-img-right, .float-img-circle { float: none; display: block; max-width: 100%; width: 100%; margin: 12px 0; height: auto; }
+            .float-img-circle { height: 220px; }
+            .chapter-heading { font-size: 22px; }
             .toc-panel { left: -90%; width: 90%; }
             .admin-panel { max-width: 100%; }
         }
@@ -416,383 +207,261 @@
     <div class="background-layer" id="bgLayer"></div>
     <div class="loader" id="loader"><div class="spinner"></div><div class="loader-text">Загрузка истории...</div></div>
     <div class="overlay" id="overlay"></div>
+
+    <!-- Оглавление -->
     <div class="toc-panel" id="tocPanel">
         <div class="toc-header"><h2>📖 Оглавление</h2></div>
         <div class="toc-list" id="tocList"></div>
     </div>
-    <div class="overlay" id="adminOverlay" style="z-index:33;"></div>
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-header">
-            <h2>✍️ Панель автора</h2>
-            <button class="admin-close" id="adminClose">✕</button>
-        </div>
-        <div class="admin-body">
-            <div class="info-box"><strong>☁️ Облачная синхронизация</strong><br>Главы сохраняются на сервер. Все читатели видят изменения мгновенно.</div>
-            <label>Название главы</label>
-            <input type="text" id="chapterTitleInput" placeholder="Например: Глава 1: Начало пути">
-            <label>Текст главы (можно HTML)</label>
-            <textarea id="chapterTextInput" placeholder="Вставьте текст главы...&#10;&#10;Картинки: &lt;img src=&quot;ССЫЛКА&quot; class=&quot;float-img-left&quot;&gt;"></textarea>
-            <input type="hidden" id="editingChapterIndex" value="-1">
-            <div class="btn-row">
-                <button class="btn btn-primary" id="saveChapterBtn">💾 Сохранить главу</button>
-                <button class="btn btn-outline" id="cancelEditBtn" style="display:none;">Отмена</button>
+
+    <!-- Модалка настроек -->
+    <div class="overlay" id="settingsOverlay" style="z-index:39;"></div>
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-sheet">
+            <div class="settings-handle"></div>
+            <div class="settings-title">⚙️ Настройки</div>
+            <div class="settings-grid">
+                <button class="settings-btn-item" onclick="changeBg('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920')">🌄 Горы</button>
+                <button class="settings-btn-item" onclick="changeBg('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920')">🌊 Океан</button>
+                <button class="settings-btn-item" onclick="changeBg('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920')">🌿 Лес</button>
+                <button class="settings-btn-item" onclick="changeFont('Georgia')">Georgia</button>
+                <button class="settings-btn-item" onclick="changeFont('Arial')">Arial</button>
+                <button class="settings-btn-item" onclick="changeFont('Courier New')">Mono</button>
+                <button class="settings-btn-item" onclick="toggleOpacity()">🌗 Темнее</button>
+                <button class="settings-btn-item" onclick="toggleOpacity()">☀️ Светлее</button>
+                <button class="settings-btn-item" onclick="closeSettings()">✕ Закрыть</button>
             </div>
-            <label style="margin-top:24px;">📋 Все главы</label>
-            <div id="chapterListContainer"><p style="color:#666;font-size:13px;text-align:center;padding:20px;">Загрузка...</p></div>
-            <div class="btn-row">
-                <button class="btn btn-success" id="exportBtn">📤 Скачать JSON</button>
-                <button class="btn btn-outline" id="importBtn">📥 Загрузить JSON</button>
-            </div>
-            <input type="file" id="importFileInput" accept=".json" style="display:none;">
-            <p class="sync-status" id="syncStatus"></p>
         </div>
     </div>
-    <div class="fab fab-top"><button class="fab-btn" id="secretAdminBtn" title="Панель автора" style="font-size:14px;opacity:0.5;">🔑</button></div>
+
+    <!-- Админка -->
+    <div class="overlay" id="adminOverlay" style="z-index:33;"></div>
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header"><h2>✍️ Панель автора</h2><button class="admin-close" id="adminClose">✕</button></div>
+        <div class="admin-body">
+            <label>Название главы</label>
+            <input type="text" id="chapterTitleInput" placeholder="Глава 1: Начало">
+            <label>Текст главы</label>
+            <textarea id="chapterTextInput" placeholder="Текст главы..."></textarea>
+            <input type="hidden" id="editingChapterIndex" value="-1">
+            <div class="btn-row">
+                <button class="btn btn-primary" id="saveChapterBtn">💾 Сохранить</button>
+                <button class="btn btn-outline" id="cancelEditBtn" style="display:none;">Отмена</button>
+            </div>
+            <label style="margin-top:20px;">📋 Все главы</label>
+            <div id="chapterListContainer"></div>
+            <div class="btn-row">
+                <button class="btn btn-success" id="exportBtn">📤 JSON</button>
+                <button class="btn btn-outline" id="importBtn">📥 Импорт</button>
+            </div>
+            <input type="file" id="importFileInput" accept=".json" style="display:none;">
+            <p id="syncStatus" style="font-size:12px;text-align:center;margin-top:8px;color:#888;"></p>
+        </div>
+    </div>
+
+    <!-- Читалка -->
     <div class="reader-container">
         <div class="text-window" id="textWindow">
             <div class="top-bar">
-                <div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
+                <div class="top-bar-left">
+                    <div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
+                </div>
                 <div class="chapter-title-top" id="chapterTitleTop">Загрузка...</div>
+                <button class="settings-btn" id="settingsBtn">⚙️</button>
             </div>
             <div id="chaptersContainer"></div>
-            <div class="nav-footer">
-                <button class="nav-btn" id="prevBtn" disabled><span class="arrow">◀</span> Назад</button>
-                <button class="nav-btn" id="nextBtn" disabled>Далее <span class="arrow">▶</span></button>
-            </div>
         </div>
     </div>
-    <div class="fab">
-        <div class="fab-sub" id="fabSub">
-            <button class="fab-sub-btn" onclick="changeBg('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920')">🌄 Горы</button>
-            <button class="fab-sub-btn" onclick="changeBg('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920')">🌊 Океан</button>
-            <button class="fab-sub-btn" onclick="changeBg('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920')">🌿 Лес</button>
-            <button class="fab-sub-btn" onclick="changeFont('Georgia')">🔤 Georgia</button>
-            <button class="fab-sub-btn" onclick="changeFont('Arial')">🔤 Arial</button>
-            <button class="fab-sub-btn" onclick="toggleOpacity()">🌗 Темнее</button>
-        </div>
-        <button class="fab-btn" id="fabBtn">⚙️</button>
+
+    <!-- Нав-бар внизу -->
+    <div class="nav-bar" id="navBar">
+        <button class="nav-btn" id="prevBtn" disabled>◀ Назад</button>
+        <button class="nav-btn" id="nextBtn" disabled>Далее ▶</button>
     </div>
+
+    <!-- Админ-кнопка -->
+    <button id="secretAdminBtn" style="position:fixed;top:8px;right:8px;z-index:50;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:12px;cursor:pointer;opacity:0.4;display:flex;align-items:center;justify-content:center;">🔑</button>
+
     <script>
-        // ==================== НАСТРОЙКИ ====================
+        // КОНФИГ
         const JSONBIN_API_KEY = '$2a$10$psgtjPI5idJwCCOV4wWc7.esW5bIqzm9LX2Fafo.L5FIbwIj25gES';
         const JSONBIN_BIN_ID = '69fa3b46aaba882197756b83';
-        const ADMIN_PASSWORD = '1707';
+        const ADMIN_PASSWORD = '1234';
         const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
         let chaptersData = [];
         let currentChapter = 0;
 
-        // ==================== API ====================
+        // API
         async function fetchChapters() {
             try {
-                const resp = await fetch(JSONBIN_URL, { headers: { 'X-Access-Key': JSONBIN_API_KEY } });
-                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                const json = await resp.json();
-                chaptersData = json.record;
-                if (!Array.isArray(chaptersData)) chaptersData = [];
+                const r = await fetch(JSONBIN_URL, { headers: { 'X-Access-Key': JSONBIN_API_KEY } });
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                const j = await r.json();
+                chaptersData = Array.isArray(j.record) ? j.record : [];
                 return true;
-            } catch (err) {
-                console.error('Ошибка загрузки:', err);
-                const local = localStorage.getItem('reader_backup');
-                if (local) { try { chaptersData = JSON.parse(local); } catch(e) { chaptersData = []; } }
+            } catch(e) {
+                const loc = localStorage.getItem('reader_backup');
+                chaptersData = loc ? JSON.parse(loc) : [];
                 return false;
             }
         }
-
         async function uploadChapters() {
             try {
-                const resp = await fetch(JSONBIN_URL, {
-                    method: 'PUT',
-                    headers: { 'X-Access-Key': JSONBIN_API_KEY, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(chaptersData)
-                });
-                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const r = await fetch(JSONBIN_URL, { method: 'PUT', headers: { 'X-Access-Key': JSONBIN_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(chaptersData) });
+                if (!r.ok) throw new Error('HTTP ' + r.status);
                 localStorage.setItem('reader_backup', JSON.stringify(chaptersData));
                 return true;
-            } catch (err) {
-                console.error('Ошибка сохранения:', err);
+            } catch(e) {
                 localStorage.setItem('reader_backup', JSON.stringify(chaptersData));
                 return false;
             }
         }
 
-        function renderAllChapters() {
+        // Рендер глав
+        function renderAll() {
             const c = document.getElementById('chaptersContainer');
             if (!chaptersData.length) {
-                c.innerHTML = '<div class="empty-state"><div class="icon">📚</div><h3>Здесь пока пусто</h3><p>Автор ещё не добавил ни одной главы.</p></div>';
-                document.getElementById('chapterTitleTop').textContent = 'Читалка';
-                document.getElementById('prevBtn').disabled = true;
-                document.getElementById('nextBtn').disabled = true;
+                c.innerHTML = '<div style="text-align:center;padding:60px 30px;"><div style="font-size:60px;">📚</div><h3 style="color:#fff;">Пока пусто</h3></div>';
                 return;
             }
-            c.innerHTML = chaptersData.map((ch, i) => `
-                <div class="chapter-content${i===0?' active':''}" data-chapter="${i+1}">
-                    <h1 class="chapter-heading">${ch.title.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</h1>
+            c.innerHTML = chaptersData.map((ch,i) => `
+                <div class="chapter-content${i===0?' active':''}" data-ch="${i+1}">
+                    <h1 class="chapter-heading">${esc(ch.title)}</h1>
                     <div class="content">${ch.content}</div>
-                </div>
-            `).join('');
+                </div>`).join('');
         }
+        function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
+        // Оглавление
         function buildTOC() {
             const l = document.getElementById('tocList');
             if (!chaptersData.length) { l.innerHTML = '<p style="color:#666;text-align:center;padding:20px;">Нет глав</p>'; return; }
-            l.innerHTML = chaptersData.map((ch, i) => `
+            l.innerHTML = chaptersData.map((ch,i) => `
                 <button class="toc-item${i===0?' active':''}" data-idx="${i}">
-                    <span class="chapter-num" style="font-size:11px;color:#6c5ce7;display:block;letter-spacing:1.5px;margin-bottom:4px;">Глава ${i+1}</span>
-                    ${ch.title.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/^Глава \d+:?\s*/, '')}
-                </button>
-            `).join('');
-            l.querySelectorAll('.toc-item').forEach(b => b.addEventListener('click', () => goToChapter(parseInt(b.dataset.idx))));
+                    <span style="font-size:11px;color:#6c5ce7;display:block;margin-bottom:4px;">Глава ${i+1}</span>
+                    ${esc(ch.title.replace(/^Глава \d+:?\s*/, ''))}
+                </button>`).join('');
+            l.querySelectorAll('.toc-item').forEach(b => b.addEventListener('click', () => goTo(parseInt(b.dataset.idx))));
         }
 
-        function goToChapter(idx) {
+        function goTo(idx) {
             if (idx < 0 || idx >= chaptersData.length) return;
             currentChapter = idx;
             document.querySelectorAll('.chapter-content').forEach(c => c.classList.remove('active'));
-            const el = document.querySelector(`.chapter-content[data-chapter="${idx+1}"]`);
+            const el = document.querySelector(`[data-ch="${idx+1}"]`);
             if (el) el.classList.add('active');
             document.getElementById('chapterTitleTop').textContent = chaptersData[idx].title;
-            document.getElementById('prevBtn').disabled = (idx === 0);
-            document.getElementById('nextBtn').disabled = (idx >= chaptersData.length - 1);
-            document.querySelectorAll('.toc-item').forEach((b, i) => b.classList.toggle('active', i === idx));
+            document.getElementById('prevBtn').disabled = idx === 0;
+            document.getElementById('nextBtn').disabled = idx >= chaptersData.length - 1;
+            document.querySelectorAll('.toc-item').forEach((b,i) => b.classList.toggle('active', i===idx));
             closeTOC();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo(0,0);
         }
 
-        function openTOC() { document.getElementById('tocPanel').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeTOC() { document.getElementById('tocPanel').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.style.overflow = ''; }
+        function openTOC() { document.getElementById('tocPanel').classList.add('open'); document.getElementById('overlay').classList.add('active'); }
+        function closeTOC() { document.getElementById('tocPanel').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
+        document.getElementById('menuBtn').onpointerup = e => { e.preventDefault(); openTOC(); };
+        document.getElementById('overlay').onpointerup = e => { e.preventDefault(); closeTOC(); };
 
-        document.getElementById('menuBtn').onpointerup = function(e) {
-            e.preventDefault();
-            openTOC();
-        };
-        document.getElementById('overlay').onpointerup = function(e) {
-            e.preventDefault();
-            closeTOC();
-        };
+        // Нав-бар
+        document.getElementById('prevBtn').onpointerup = e => { e.preventDefault(); if (currentChapter > 0) goTo(currentChapter - 1); };
+        document.getElementById('nextBtn').onpointerup = e => { e.preventDefault(); if (currentChapter < chaptersData.length - 1) goTo(currentChapter + 1); };
 
-        let tsx = 0;
-        document.getElementById('tocPanel').addEventListener('touchstart', e => { tsx = e.touches[0].clientX; });
-        document.getElementById('tocPanel').addEventListener('touchmove', e => { if (e.touches[0].clientX - tsx < -40) closeTOC(); });
+        // Настройки
+        function openSettings() { document.getElementById('settingsModal').classList.add('open'); document.getElementById('settingsOverlay').classList.add('active'); }
+        function closeSettings() { document.getElementById('settingsModal').classList.remove('open'); document.getElementById('settingsOverlay').classList.remove('active'); }
+        document.getElementById('settingsBtn').onpointerup = e => { e.preventDefault(); openSettings(); };
+        document.getElementById('settingsOverlay').onpointerup = e => { e.preventDefault(); closeSettings(); };
 
-        let navLocked = false;
-        
-        document.getElementById('prevBtn').onpointerup = function(e) {
-            e.preventDefault();
-            if (navLocked || currentChapter <= 0) return;
-            navLocked = true;
-            goToChapter(currentChapter - 1);
-            setTimeout(() => { navLocked = false; }, 500);
-        };
-        
-        document.getElementById('nextBtn').onpointerup = function(e) {
-            e.preventDefault();
-            if (navLocked || currentChapter >= chaptersData.length - 1) return;
-            navLocked = true;
-            goToChapter(currentChapter + 1);
-            setTimeout(() => { navLocked = false; }, 500);
-        };
-        let sx = 0, sy = 0;
-        document.addEventListener('touchstart', e => {
-            if (e.target.closest('.toc-panel,.admin-panel,.fab')) return;
-            sx = e.touches[0].clientX; sy = e.touches[0].clientY;
-        });
-        document.addEventListener('touchend', e => {
-            if (e.target.closest('.toc-panel,.admin-panel,.fab')) return;
-            const dx = e.changedTouches[0].clientX - sx;
-            const dy = e.changedTouches[0].clientY - sy;
-            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-                if (dx < 0 && currentChapter < chaptersData.length - 1) goToChapter(currentChapter + 1);
-                else if (dx > 0 && currentChapter > 0) goToChapter(currentChapter - 1);
-            }
-        });
+        function changeBg(url) { document.getElementById('bgLayer').style.backgroundImage = `url('${url}')`; closeSettings(); }
+        function changeFont(f) { document.querySelectorAll('.content').forEach(c => c.style.fontFamily = f); closeSettings(); }
+        let olvl = 0; const ov = [0.82, 0.55, 0.95];
+        function toggleOpacity() { olvl = (olvl + 1) % ov.length; document.getElementById('textWindow').style.background = `rgba(0,0,0,${ov[olvl]})`; closeSettings(); }
 
-        // ==================== АДМИНКА ====================
+        // Админка
         const adminPanel = document.getElementById('adminPanel');
         const adminOverlay = document.getElementById('adminOverlay');
-
         function openAdmin() {
-            const pw = prompt('Введите пароль автора:');
-            if (pw !== ADMIN_PASSWORD) { alert('pasito mamasito'); return; }
-            adminPanel.classList.add('open');
-            adminOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const pw = prompt('Пароль автора:');
+            if (pw !== ADMIN_PASSWORD) { alert('Неверно'); return; }
+            adminPanel.classList.add('open'); adminOverlay.classList.add('active');
             refreshChapterList();
         }
         function closeAdmin() {
-            adminPanel.classList.remove('open');
-            adminOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-            cancelEdit();
-            renderAllChapters();
-            buildTOC();
-            if (chaptersData.length) goToChapter(Math.min(currentChapter, chaptersData.length - 1));
+            adminPanel.classList.remove('open'); adminOverlay.classList.remove('active');
+            cancelEdit(); renderAll(); buildTOC(); if (chaptersData.length) goTo(Math.min(currentChapter, chaptersData.length-1));
         }
+        document.getElementById('secretAdminBtn').onpointerup = e => { e.preventDefault(); openAdmin(); };
+        document.getElementById('adminClose').onpointerup = e => { e.preventDefault(); closeAdmin(); };
+        adminOverlay.onpointerup = e => { e.preventDefault(); closeAdmin(); };
 
-        document.getElementById('secretAdminBtn').onpointerup = function(e) {
-            e.preventDefault();
-            openAdmin();
-        };
-        document.getElementById('adminClose').onpointerup = function(e) {
-            e.preventDefault();
-            closeAdmin();
-        };
-        adminOverlay.onpointerup = function(e) {
-            e.preventDefault();
-            closeAdmin();
-        };
         function refreshChapterList() {
             const c = document.getElementById('chapterListContainer');
-            if (!chaptersData.length) { c.innerHTML = '<p style="color:#666;text-align:center;padding:20px;">Пока нет глав</p>'; return; }
-            c.innerHTML = chaptersData.map((ch, i) => `
-                <div class="chapter-list-item">
-                    <span>${ch.title}</span>
-                    <button class="edit-btn" data-idx="${i}">✏️</button>
-                    <button data-idx="${i}">🗑</button>
-                </div>
-            `).join('');
+            if (!chaptersData.length) { c.innerHTML = '<p style="color:#666;text-align:center;">Нет глав</p>'; return; }
+            c.innerHTML = chaptersData.map((ch,i) => `
+                <div class="chapter-list-item"><span>${esc(ch.title)}</span>
+                <button class="edit-btn" data-idx="${i}">✏️</button>
+                <button data-idx="${i}">🗑</button></div>`).join('');
             c.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', () => editChapter(parseInt(b.dataset.idx))));
             c.querySelectorAll('button:not(.edit-btn)').forEach(b => b.addEventListener('click', () => deleteChapter(parseInt(b.dataset.idx))));
         }
 
-        function editChapter(idx) {
-            document.getElementById('chapterTitleInput').value = chaptersData[idx].title;
-            document.getElementById('chapterTextInput').value = chaptersData[idx].content;
-            document.getElementById('editingChapterIndex').value = idx;
-            document.getElementById('saveChapterBtn').textContent = '💾 Обновить главу';
+        function editChapter(i) {
+            document.getElementById('chapterTitleInput').value = chaptersData[i].title;
+            document.getElementById('chapterTextInput').value = chaptersData[i].content;
+            document.getElementById('editingChapterIndex').value = i;
+            document.getElementById('saveChapterBtn').textContent = '💾 Обновить';
             document.getElementById('cancelEditBtn').style.display = 'block';
-            document.getElementById('chapterTitleInput').scrollIntoView({ behavior: 'smooth' });
         }
         function cancelEdit() {
             document.getElementById('chapterTitleInput').value = '';
             document.getElementById('chapterTextInput').value = '';
             document.getElementById('editingChapterIndex').value = '-1';
-            document.getElementById('saveChapterBtn').textContent = '💾 Сохранить главу';
+            document.getElementById('saveChapterBtn').textContent = '💾 Сохранить';
             document.getElementById('cancelEditBtn').style.display = 'none';
         }
-        async function deleteChapter(idx) {
-            if (!confirm(`Удалить "${chaptersData[idx].title}"?`)) return;
-            chaptersData.splice(idx, 1);
-            const ok = await uploadChapters();
-            document.getElementById('syncStatus').textContent = ok ? '✅ Удалено и сохранено в облаке' : '⚠ Удалено локально, ошибка сервера';
-            document.getElementById('syncStatus').className = 'sync-status ' + (ok ? 'success' : 'error');
-            refreshChapterList();
-            renderAllChapters();
-            buildTOC();
-            if (chaptersData.length) goToChapter(Math.min(currentChapter, chaptersData.length - 1));
+        async function deleteChapter(i) {
+            if (!confirm('Удалить?')) return;
+            chaptersData.splice(i,1);
+            await uploadChapters();
+            refreshChapterList(); renderAll(); buildTOC();
         }
-
-        document.getElementById('saveChapterBtn').addEventListener('click', async () => {
-            const title = document.getElementById('chapterTitleInput').value.trim();
-            const content = document.getElementById('chapterTextInput').value.trim();
-            if (!title) { alert('Введите название'); return; }
-            if (!content) { alert('Введите текст'); return; }
-            const idx = parseInt(document.getElementById('editingChapterIndex').value);
-            if (idx >= 0) chaptersData[idx] = { title, content };
-            else chaptersData.push({ title, content });
-            const ok = await uploadChapters();
-            document.getElementById('syncStatus').textContent = ok ? '✅ Сохранено в облаке!' : '⚠ Сохранено локально, ошибка сервера';
-            document.getElementById('syncStatus').className = 'sync-status ' + (ok ? 'success' : 'error');
-            cancelEdit();
-            refreshChapterList();
-            renderAllChapters();
-            buildTOC();
-            goToChapter(idx >= 0 ? idx : chaptersData.length - 1);
-            document.getElementById('chapterTitleInput').focus();
-        });
-        document.getElementById('cancelEditBtn').addEventListener('click', cancelEdit);
-
-        document.getElementById('exportBtn').addEventListener('click', () => {
-            const blob = new Blob([JSON.stringify(chaptersData, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = 'история.json'; a.click();
-            URL.revokeObjectURL(url);
-        });
-        document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFileInput').click());
-        document.getElementById('importFileInput').addEventListener('change', async (e) => {
-            const file = e.target.files[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async (ev) => {
-                try {
-                    const data = JSON.parse(ev.target.result);
-                    if (!Array.isArray(data)) throw new Error('Не массив');
-                    chaptersData = data;
-                    const ok = await uploadChapters();
-                    document.getElementById('syncStatus').textContent = ok ? '✅ Импортировано и сохранено в облаке!' : '⚠ Импортировано локально';
-                    document.getElementById('syncStatus').className = 'sync-status ' + (ok ? 'success' : 'error');
-                    refreshChapterList();
-                    renderAllChapters();
-                    buildTOC();
-                    if (chaptersData.length) goToChapter(0);
-                } catch(err) { alert('Ошибка формата файла'); }
-            };
-            reader.readAsText(file);
-            e.target.value = '';
-        });
-
-        function changeBg(url) { document.getElementById('bgLayer').style.backgroundImage = `url('${url}')`; closeFab(); }
-        function changeFont(f) { document.querySelectorAll('.content').forEach(c => c.style.fontFamily = f); closeFab(); }
-        let ol = 0;
-        const ops = [0.82, 0.55, 0.95];
-        function toggleOpacity() { ol = (ol + 1) % ops.length; document.getElementById('textWindow').style.background = `rgba(0,0,0,${ops[ol]})`; closeFab(); }
-
-        const fabBtn = document.getElementById('fabBtn');
-        const fabSub = document.getElementById('fabSub');
-        let fabOpen = false;
-        
-        fabBtn.onpointerup = function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            fabOpen = !fabOpen;
-            if (fabOpen) {
-                fabSub.classList.add('open');
-                fabBtn.textContent = '✕';
-            } else {
-                fabSub.classList.remove('open');
-                fabBtn.textContent = '⚙️';
-            }
+        document.getElementById('saveChapterBtn').onclick = async () => {
+            const t = document.getElementById('chapterTitleInput').value.trim();
+            const c = document.getElementById('chapterTextInput').value.trim();
+            if (!t || !c) return;
+            const i = parseInt(document.getElementById('editingChapterIndex').value);
+            if (i >= 0) chaptersData[i] = { title: t, content: c };
+            else chaptersData.push({ title: t, content: c });
+            await uploadChapters();
+            cancelEdit(); refreshChapterList(); renderAll(); buildTOC();
         };
-        
-        // Кнопки внутри FAB-меню
-        document.querySelectorAll('.fab-sub-btn').forEach(btn => {
-            btn.onpointerup = function(e) {
-                e.stopPropagation();
-                e.preventDefault();
-                const onclick = this.getAttribute('onclick');
-                if (onclick) {
-                    // Выполняем функцию из onclick
-                    const fn = new Function(onclick);
-                    fn.call(this);
-                }
+        document.getElementById('cancelEditBtn').onclick = cancelEdit;
+        document.getElementById('exportBtn').onclick = () => {
+            const b = new Blob([JSON.stringify(chaptersData)], { type: 'application/json' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'история.json'; a.click();
+        };
+        document.getElementById('importBtn').onclick = () => document.getElementById('importFileInput').click();
+        document.getElementById('importFileInput').onchange = async (e) => {
+            const f = e.target.files[0]; if (!f) return;
+            const r = new FileReader();
+            r.onload = async (ev) => {
+                try { chaptersData = JSON.parse(ev.target.result); await uploadChapters(); refreshChapterList(); renderAll(); buildTOC(); } catch(ex) {}
             };
-        });
-        
-        function closeFab() { 
-            fabOpen = false; 
-            fabSub.classList.remove('open'); 
-            fabBtn.textContent = '⚙️'; 
-        }
-        
-        document.addEventListener('pointerup', function(e) { 
-            if (!e.target.closest('.fab') && fabOpen) closeFab(); 
-        });
+            r.readAsText(f);
+        };
 
-        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
-        async function init() {
-            const ok = await fetchChapters();
+        // Инит
+        (async () => {
+            await fetchChapters();
             document.getElementById('loader').classList.add('hidden');
-            renderAllChapters();
-            buildTOC();
+            renderAll(); buildTOC();
             if (chaptersData.length) {
-                goToChapter(0);
-                document.getElementById('prevBtn').disabled = true;
+                goTo(0);
                 document.getElementById('nextBtn').disabled = chaptersData.length <= 1;
             }
-            if (!ok) {
-                document.getElementById('chapterTitleTop').textContent = '⚠ Оффлайн-режим';
-            }
-        }
-        init();
+        })();
     </script>
 </body>
 </html>
