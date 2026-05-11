@@ -209,8 +209,12 @@
     <div class="overlay" id="overlay"></div>
 
     <!-- Оглавление -->
+    <!-- Оглавление -->
     <div class="toc-panel" id="tocPanel">
-        <div class="toc-header"><h2>📖 Оглавление</h2></div>
+        <div class="toc-header" style="display:flex;justify-content:space-between;align-items:center;">
+            <h2>📖 Оглавление</h2>
+            <button id="secretAdminBtn" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.2);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🔑</button>
+        </div>
         <div class="toc-list" id="tocList"></div>
     </div>
 
@@ -278,10 +282,6 @@
         <button class="nav-btn" id="prevBtn" disabled>◀ Назад</button>
         <button class="nav-btn" id="nextBtn" disabled>Далее ▶</button>
     </div>
-
-    <!-- Админ-кнопка -->
-    <button id="secretAdminBtn" style="position:fixed;top:8px;right:8px;z-index:50;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:12px;cursor:pointer;opacity:0.4;display:flex;align-items:center;justify-content:center;">🔑</button>
-
     <script>
         // КОНФИГ
         const JSONBIN_API_KEY = '$2a$10$psgtjPI5idJwCCOV4wWc7.esW5bIqzm9LX2Fafo.L5FIbwIj25gES';
