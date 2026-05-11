@@ -231,8 +231,8 @@
                 <button class="settings-btn-item" onclick="changeFont('Georgia')">Georgia</button>
                 <button class="settings-btn-item" onclick="changeFont('Arial')">Arial</button>
                 <button class="settings-btn-item" onclick="changeFont('Courier New')">Mono</button>
-                <button class="settings-btn-item" onclick="toggleOpacity()">🌗 Темнее</button>
-                <button class="settings-btn-item" onclick="toggleOpacity()">☀️ Светлее</button>
+                <button class="settings-btn-item" onclick="toggleOpacity()">🖤 100%</button>
+                <button class="settings-btn-item" onclick="toggleOpacity()">🩶 30%</button>
                 <button class="settings-btn-item" onclick="closeSettings()">✕ Закрыть</button>
             </div>
         </div>
@@ -376,8 +376,12 @@
 
         function changeBg(url) { document.getElementById('bgLayer').style.backgroundImage = `url('${url}')`; closeSettings(); }
         function changeFont(f) { document.querySelectorAll('.content').forEach(c => c.style.fontFamily = f); closeSettings(); }
-        let olvl = 0; const ov = [0.82, 0.55, 0.95];
-        function toggleOpacity() { olvl = (olvl + 1) % ov.length; document.getElementById('textWindow').style.background = `rgba(0,0,0,${ov[olvl]})`; closeSettings(); }
+        let darkMode = true;
+        function toggleOpacity() {
+            darkMode = !darkMode;
+            document.getElementById('textWindow').style.background = darkMode ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.3)';
+            closeSettings();
+        }
 
         // Админка
         const adminPanel = document.getElementById('adminPanel');
