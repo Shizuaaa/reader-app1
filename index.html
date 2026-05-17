@@ -76,7 +76,8 @@
         .top-bar {
             display: flex; align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 15;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
             margin: -30px -22px 20px; padding: 15px 22px; pointer-events: auto;
             border-bottom: 1px solid rgba(255,255,255,0.08);
         }
@@ -376,7 +377,7 @@
 
         function changeBg(url) { document.getElementById('bgLayer').style.backgroundImage = `url('${url}')`; closeSettings(); }
         function changeFont(f) { document.querySelectorAll('.content').forEach(c => c.style.fontFamily = f); closeSettings(); }
-        let darkMode = true;
+        let darkMode = false;
         function toggleOpacity() {
             darkMode = !darkMode;
             document.getElementById('textWindow').style.background = darkMode ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.15)';
